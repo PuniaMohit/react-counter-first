@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Counter from "./components/Counter/counter";
+import "./App.css";
 
 function App() {
+  const [counters, setCounters] = useState([]);
+  const [totalTime, setTotalTime] = useState(0);
+
+  const addCounter = () => {
+    setCounters([...counters, 0]);
+  };
+  const handleTimeChange = (seconds) => {
+    setTotalTime((prevTotalTime) => prevTotalTime + seconds);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="count-container">
+        <button className="add-counter-button" onClick={addCounter}>
+          Add Counter
+        </button>
+        <div className="counter-show-addition">{totalTime}</div>
+      </div>
+      <div className="counter-container">
+        {counters.map((counter, index) => (
+          <div key={index} className="counter-list">
+            <Counter onTimeChange={handleTimeChange} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
